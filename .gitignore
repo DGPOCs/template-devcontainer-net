@@ -1,16 +1,16 @@
-# Maven
-/target/
-!.mvn/wrapper/maven-wrapper.jar
+# .NET build output
+bin/
+obj/
+TestResults/
+
+# User-specific files
+*.user
+*.suo
 
 # IDEs
 .idea/
-.project
-.classpath
-.settings/
-*.iml
-
-# VS Code
 .vscode/
+*.iml
 
 # OS Files
 .DS_Store
