@@ -1,15 +1,16 @@
-# Plantilla Spring Boot con DevContainers
+# Plantilla .NET con DevContainers
 
-Este repositorio ofrece una plantilla lista para usar que combina un proyecto Spring Boot con la configuración necesaria para ejecutarlo dentro de un [Dev Container](https://containers.dev/). Está pensado como punto de partida para crear APIs Java modernas manteniendo un entorno de desarrollo reproducible.
+Este repositorio proporciona una plantilla lista para usar que combina una API minimalista desarrollada con ASP.NET Core 8 y la configuración necesaria para ejecutarla dentro de un [Dev Container](https://containers.dev/). Está pensada como punto de partida para crear APIs modernas en .NET manteniendo un entorno de desarrollo reproducible.
 
 ## Características principales
 
-- **Spring Boot 3.2** con Java 21 y Maven.
+- **ASP.NET Core 8** con SDK oficial de Microsoft.
 - API REST sencilla con dos endpoints:
   - `GET /api/welcome`: devuelve el mensaje de bienvenida actual.
   - `POST /api/welcome`: actualiza el mensaje de bienvenida (requiere un cuerpo JSON con el campo `message`).
-- Cobertura de pruebas automatizadas mediante `MockMvc`.
-- Configuración de Dev Container para trabajar de forma consistente en VS Code o GitHub Codespaces.
+- El mensaje por defecto se define en `appsettings.json` y se mantiene en memoria tras las actualizaciones.
+- Suite de pruebas automatizadas con `xUnit`, `FluentAssertions` y `Microsoft.AspNetCore.Mvc.Testing` para ejecutar pruebas de integración sobre la API.
+- Configuración de Dev Container para trabajar de forma consistente en VS Code o GitHub Codespaces, con `dotnet restore` automático tras la creación del contenedor.
 
 ## Requisitos previos
 
@@ -20,17 +21,17 @@ Este repositorio ofrece una plantilla lista para usar que combina un proyecto Sp
 
 1. Abre el repositorio en VS Code.
 2. Cuando se te solicite, selecciona **Reopen in Container** (o usa el comando `Dev Containers: Reopen in Container`).
-3. La imagen incluye Java 21 y Maven. Tras la construcción del contenedor se ejecuta `mvn dependency:go-offline` para precargar dependencias.
+3. La imagen incluye el SDK de .NET 8. Tras la construcción del contenedor se ejecuta `dotnet restore DevcontainerWelcome.sln` para preparar las dependencias.
 
 ## Ejecución de la aplicación
 
-Una vez dentro del Dev Container (o en tu entorno local con Java 21 y Maven):
+Una vez dentro del Dev Container (o en tu entorno local con el SDK de .NET 8):
 
 ```bash
-mvn spring-boot:run
+dotnet run --project src/WelcomeApi/WelcomeApi.csproj
 ```
 
-La API estará disponible en `http://localhost:8080`.
+La API estará disponible en `http://localhost:8080` gracias a la variable de entorno configurada en el contenedor.
 
 ### Ejemplo de peticiones
 
@@ -53,14 +54,14 @@ La API estará disponible en `http://localhost:8080`.
 Ejecuta la suite de pruebas con:
 
 ```bash
-mvn test
+dotnet test DevcontainerWelcome.sln
 ```
 
 ## Personalización
 
-- Modifica el mensaje de bienvenida por defecto editando `src/main/resources/application.properties` (`app.welcome-message`).
-- Añade nuevas dependencias en `pom.xml` según las necesidades de tu proyecto.
-- Ajusta la configuración del contenedor en `.devcontainer/devcontainer.json` para incluir herramientas adicionales.
+- Modifica el mensaje de bienvenida por defecto editando `src/WelcomeApi/appsettings.json` (`Welcome:WelcomeMessage`).
+- Añade nuevas dependencias actualizando los ficheros `.csproj` en `src/` y `tests/`.
+- Ajusta la configuración del contenedor en `.devcontainer/devcontainer.json` para incluir herramientas adicionales o cambiar los puertos expuestos.
 
 ## Licencia
 
