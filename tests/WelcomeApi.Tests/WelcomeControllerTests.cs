@@ -1,6 +1,5 @@
 using System.Net;
 using System.Net.Http.Json;
-using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using WelcomeApi.Models;
 using Xunit;
@@ -23,8 +22,8 @@ public class WelcomeControllerTests : IClassFixture<WebApplicationFactory<Progra
         response.EnsureSuccessStatusCode();
 
         var result = await response.Content.ReadFromJsonAsync<WelcomeMessageResponse>();
-        result.Should().NotBeNull();
-        result!.Message.Should().Be("Bienvenido a Dev Containers con .NET!");
+        Assert.NotNull(result);
+        Assert.Equal("Bienvenido a Dev Containers con .NET!", result.Message);
     }
 
     [Fact]
@@ -36,15 +35,15 @@ public class WelcomeControllerTests : IClassFixture<WebApplicationFactory<Progra
         response.EnsureSuccessStatusCode();
 
         var updated = await response.Content.ReadFromJsonAsync<WelcomeMessageResponse>();
-        updated.Should().NotBeNull();
-        updated!.Message.Should().Be(request.Message);
+        Assert.NotNull(updated);
+        Assert.Equal(request.Message, updated.Message);
 
         var secondResponse = await _client.GetAsync("/api/welcome");
         secondResponse.EnsureSuccessStatusCode();
 
         var retrieved = await secondResponse.Content.ReadFromJsonAsync<WelcomeMessageResponse>();
-        retrieved.Should().NotBeNull();
-        retrieved!.Message.Should().Be(request.Message);
+        Assert.NotNull(retrieved);
+        Assert.Equal(request.Message, retrieved.Message);
     }
 
     [Fact]
@@ -52,6 +51,6 @@ public class WelcomeControllerTests : IClassFixture<WebApplicationFactory<Progra
     {
         var response = await _client.PostAsJsonAsync("/api/welcome", new WelcomeMessageRequest { Message = string.Empty });
 
-        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
 }
