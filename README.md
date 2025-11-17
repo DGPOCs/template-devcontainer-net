@@ -47,15 +47,6 @@ La API estará disponible en `http://localhost:8080` gracias a la variable de en
   curl -X POST http://localhost:8080/api/welcome \
        -H "Content-Type: application/json" \
        -d '{"message": "Hola desde Dev Containers"}'
-  ```
-
-## Pruebas
-
-Ejecuta la suite de pruebas con:
-
-```bash
-dotnet test DevcontainerWelcome.sln
-```
 
 ## Personalización
 
