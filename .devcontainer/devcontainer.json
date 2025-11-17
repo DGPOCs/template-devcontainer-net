@@ -5,7 +5,7 @@
   "containerEnv": {
     "ASPNETCORE_URLS": "http://0.0.0.0:8080"
   },
-  "postCreateCommand": "dotnet restore DevcontainerWelcome.sln",
+  "postCreateCommand": "dotnet restore DevcontainerWelcome.sln && dotnet dev-certs https",
   "forwardPorts": [8080],
   "customizations": {
     "vscode": {
